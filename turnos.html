@@ -207,103 +207,84 @@
 
     .day-cell {
       position: relative;
-      height: 4.25rem;
+      height: 4.5rem;
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       padding: 0.4rem;
       border-radius: 1.25rem;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.04);
       cursor: pointer;
+      overflow: hidden;
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .day-cell:hover {
-      background: rgba(255, 255, 255, 0.06);
       transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .day-cell.selected {
-      background: rgba(34, 197, 94, 0.12);
-      border-color: var(--accent-green);
-      box-shadow: var(--green-glow);
+      border-color: #fff !important;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
     }
 
     .day-number {
-      font-size: 0.875rem;
-      font-weight: 700;
-      color: #d4d4d8;
-    }
-
-    .shift-tag {
-      font-size: 0.65rem;
+      position: relative;
+      z-index: 10;
+      font-size: 0.9375rem;
       font-weight: 800;
-      padding: 0.15rem 0.4rem;
-      border-radius: 0.4rem;
+      color: #fff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Formulários e Inputs */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
       text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .form-input {
       width: 100%;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Cores dos Turnos */
-    .shift-manha { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); }
-    .shift-tarde { background: rgba(249, 115, 22, 0.2); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.4); }
-    .shift-noite { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
-    .shift-folga { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
-    .shift-custom { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
-
-    /* Painel do Dia Selecionado */
-    .shift-selector {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.625rem;
-      margin-top: 1rem;
-    }
-
-    .shift-btn {
-      padding: 0.875rem;
-      border-radius: 1rem;
+      background-color: #030407;
       border: 1px solid var(--border-card);
-      background: #030407;
-      color: var(--text-main);
-      font-size: 0.8125rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s;
+      border-radius: 0.875rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      color: #fff;
+      outline: none;
+      font-family: inherit;
     }
 
-    .shift-btn:hover {
-      border-color: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px);
-    }
-
-    .shift-btn.active {
+    .form-input:focus {
       border-color: var(--accent-green);
       box-shadow: var(--green-glow);
     }
 
     .notes-textarea {
       width: 100%;
-      height: 110px;
+      height: 90px;
       background-color: #030407;
       border: 1px solid var(--border-card);
-      border-radius: 1rem;
-      padding: 0.9375rem 1.125rem;
+      border-radius: 0.875rem;
+      padding: 0.75rem 1rem;
       font-size: 0.875rem;
       color: #fff;
       outline: none;
       resize: none;
       font-family: inherit;
-      margin-top: 0.75rem;
       transition: all 0.2s;
     }
 
@@ -312,42 +293,70 @@
       box-shadow: var(--green-glow);
     }
 
-    /* Card Resumo do Mês */
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-      margin-top: 1rem;
+    /* Lista de Seleção de Turnos para o Dia */
+    .shift-checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-height: 150px;
+      overflow-y: auto;
+      padding-right: 0.25rem;
     }
 
-    .summary-card {
-      background: rgba(3, 4, 7, 0.6);
-      border: 1px solid var(--border-card);
-      border-radius: 1rem;
-      padding: 0.875rem 1rem;
+    .shift-checkbox-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-
-    .btn-save-day {
-      width: 100%;
-      background: linear-gradient(135deg, #22c55e, #15803d);
-      color: #000;
-      font-weight: 800;
-      font-size: 0.875rem;
-      padding: 0.875rem;
-      border-radius: 1rem;
-      border: none;
+      padding: 0.625rem 0.875rem;
+      background: #030407;
+      border: 1px solid var(--border-card);
+      border-radius: 0.75rem;
       cursor: pointer;
-      margin-top: 1.25rem;
-      box-shadow: var(--green-glow);
       transition: all 0.2s;
     }
 
-    .btn-save-day:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(34, 197, 94, 0.6);
+    .shift-checkbox-item:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .shift-checkbox-item.checked {
+      border-color: var(--accent-green);
+      background: rgba(34, 197, 94, 0.08);
+    }
+
+    /* Gerenciador de Turnos (Criar Novo) */
+    .custom-shifts-manager {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .custom-shift-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(3, 4, 7, 0.6);
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-card);
+      font-size: 0.8125rem;
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, #22c55e, #15803d);
+      color: #000;
+      font-weight: 800;
+      font-size: 0.8125rem;
+      padding: 0.625rem 1rem;
+      border-radius: 0.75rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      box-shadow: var(--green-glow);
     }
 
     footer {
@@ -371,7 +380,7 @@
           </div>
           <div>
             <h1 style="font-size: 1.35rem; font-weight: 800; color: #fff; letter-spacing: -0.02em;">Turnos & Notas</h1>
-            <p style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Calendário de Trabalho</p>
+            <p style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Calendário Personalizado</p>
           </div>
         </div>
 
@@ -389,13 +398,13 @@
   <main>
     <div class="main-grid">
       
-      <!-- Lado Esquerdo: Calendário Principal -->
+      <!-- Lado Esquerdo: Calendário -->
       <div style="display: flex; flex-direction: column; gap: 1.5rem;">
         <div class="card">
           <div class="calendar-header">
             <div>
               <h2 id="calendarMonthYear" style="font-size: 1.45rem; font-weight: 800; text-transform: capitalize; color: #fff;">Carregando...</h2>
-              <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.2rem;">Selecione o dia para atribuir turno ou adicionar observações</p>
+              <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.2rem;">Selecione um dia para gerenciar turnos e notas</p>
             </div>
             <div class="calendar-nav">
               <button id="prevMonthBtn" class="icon-btn"><i data-lucide="chevron-left" style="width: 20px; height: 20px;"></i></button>
@@ -413,68 +422,54 @@
           </div>
         </div>
 
-        <!-- Card Resumo do Mês -->
+        <!-- Criar e Gerenciar Turnos Personalizados -->
         <div class="card">
-          <h3 style="font-size: 1.125rem; font-weight: 800; color: #fff;">Resumo do Mês</h3>
-          <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.15rem;">Contagem automática dos seus turnos agendados</p>
-          
-          <div class="summary-grid">
-            <div class="summary-card">
-              <span style="font-size: 0.8125rem; color: #fbbf24; font-weight: 700;">Manhã</span>
-              <strong id="countManha" style="font-size: 1.25rem; color: #fff;">0</strong>
+          <h3 style="font-size: 1.125rem; font-weight: 800; color: #fff; margin-bottom: 1rem;">Criar Novo Turno</h3>
+          <form id="createShiftForm" style="display: flex; gap: 0.75rem; align-items: flex-end;">
+            <div style="flex: 1; margin-bottom: 0;">
+              <label class="form-label">Nome do Turno</label>
+              <input type="text" id="newShiftName" required placeholder="Ex: Manhã, Folga, Plantão" class="form-input">
             </div>
-            <div class="summary-card">
-              <span style="font-size: 0.8125rem; color: #f97316; font-weight: 700;">Tarde</span>
-              <strong id="countTarde" style="font-size: 1.25rem; color: #fff;">0</strong>
+            <div style="width: 50px; margin-bottom: 0;">
+              <label class="form-label">Cor</label>
+              <input type="color" id="newShiftColor" value="#22c55e" style="width: 100%; height: 42px; background: #030407; border: 1px solid var(--border-card); border-radius: 0.875rem; cursor: pointer; padding: 2px;">
             </div>
-            <div class="summary-card">
-              <span style="font-size: 0.8125rem; color: #c084fc; font-weight: 700;">Noite</span>
-              <strong id="countNoite" style="font-size: 1.25rem; color: #fff;">0</strong>
-            </div>
-            <div class="summary-card">
-              <span style="font-size: 0.8125rem; color: #4ade80; font-weight: 700;">Folga</span>
-              <strong id="countFolga" style="font-size: 1.25rem; color: #fff;">0</strong>
+            <button type="submit" class="btn-action" style="height: 42px;">Adicionar</button>
+          </form>
+
+          <div style="margin-top: 1.25rem;">
+            <label class="form-label" style="margin-bottom: 0.5rem;">Seus Turnos Cadastrados</label>
+            <div id="customShiftsList" class="custom-shifts-manager">
+              <!-- Lista dinâmica -->
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Lado Direito: Editor de Turno e Notas do Dia -->
+      <!-- Lado Direito: Editor do Dia Selecionado -->
       <div>
         <div class="card" style="position: sticky; top: 96px;">
           <h3 style="font-size: 1.35rem; font-weight: 800; color: #fff;">Detalhes do Dia</h3>
           <p id="selectedDateTitle" style="font-size: 0.8125rem; color: var(--accent-neon); font-weight: 700; margin-top: 0.2rem;">Hoje</p>
 
-          <!-- Seletor de Turno -->
+          <!-- Seleção de Turnos para o Dia (Máximo 3) -->
           <div style="margin-top: 1.5rem;">
-            <label style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">Selecione o Turno</label>
-            <div class="shift-selector">
-              <button class="shift-btn" data-shift="manha">
-                <i data-lucide="sun" style="width: 18px; height: 18px; color: #fbbf24;"></i>
-                <span>Manhã</span>
-              </button>
-              <button class="shift-btn" data-shift="tarde">
-                <i data-lucide="sunset" style="width: 18px; height: 18px; color: #f97316;"></i>
-                <span>Tarde</span>
-              </button>
-              <button class="shift-btn" data-shift="noite">
-                <i data-lucide="moon" style="width: 18px; height: 18px; color: #c084fc;"></i>
-                <span>Noite</span>
-              </button>
-              <button class="shift-btn" data-shift="folga">
-                <i data-lucide="coffee" style="width: 18px; height: 18px; color: #4ade80;"></i>
-                <span>Folga</span>
-              </button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <label class="form-label" style="margin-bottom: 0;">Turnos do Dia (Max. 3)</label>
+              <span id="shiftCountIndicator" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">0/3 selecionados</span>
+            </div>
+            <div id="dayShiftSelector" class="shift-checkbox-list">
+              <!-- Renderizado via JS -->
             </div>
           </div>
 
           <!-- Anotações -->
           <div style="margin-top: 1.5rem;">
-            <label style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">Observações / Notas</label>
-            <textarea id="dayNotesInput" class="notes-textarea" placeholder="Digite horários extras, tarefas do trabalho ou lembretes..."></textarea>
+            <label class="form-label">Observações / Notas</label>
+            <textarea id="dayNotesInput" class="notes-textarea" placeholder="Adicione notas para este dia..."></textarea>
           </div>
 
-          <button id="saveDayBtn" class="btn-save-day">Guardar Informações</button>
+          <button id="saveDayBtn" class="btn-action" style="width: 100%; margin-top: 1.25rem; padding: 0.875rem; font-size: 0.875rem;">Guardar Informações</button>
           <button id="clearDayBtn" style="width: 100%; background: transparent; border: none; color: #ef4444; font-size: 0.8125rem; font-weight: 700; margin-top: 0.75rem; cursor: pointer;">Limpar Dia</button>
         </div>
       </div>
@@ -483,22 +478,34 @@
   </main>
 
   <footer>
-    Habit Pulse &copy; Calendário de Turnos de Trabalho
+    Habit Pulse &copy; Calendário Personalizado de Turnos
   </footer>
 
   <script>
-    // Armazenamento: { "YYYY-MM-DD": { shift: "manha|tarde|noite|folga", notes: "texto..." } }
-    let shiftData = JSON.parse(localStorage.getItem('hp_shifts')) || {};
+    // Chave única e garantida para os turnos no LocalStorage
+    const STORAGE_KEY_SHIFTS = 'hp_shifts_v3';
+    const STORAGE_KEY_CUSTOM = 'hp_custom_shifts_v3';
+
+    let customShifts = JSON.parse(localStorage.getItem(STORAGE_KEY_CUSTOM)) || [
+      { id: '1', name: 'Manhã', color: '#fbbf24' },
+      { id: '2', name: 'Tarde', color: '#f97316' },
+      { id: '3', name: 'Noite', color: '#c084fc' },
+      { id: '4', name: 'Folga', color: '#22c55e' }
+    ];
+
+    let shiftData = JSON.parse(localStorage.getItem(STORAGE_KEY_SHIFTS)) || {};
     
     let currentDate = new Date();
     let selectedDateStr = formatDateKey(new Date());
-    let activeShift = null;
 
     const calendarGrid = document.getElementById('calendarGrid');
     const calendarMonthYear = document.getElementById('calendarMonthYear');
     const selectedDateTitle = document.getElementById('selectedDateTitle');
     const dayNotesInput = document.getElementById('dayNotesInput');
-    const shiftButtons = document.querySelectorAll('.shift-btn');
+    const createShiftForm = document.getElementById('createShiftForm');
+    const customShiftsList = document.getElementById('customShiftsList');
+    const dayShiftSelector = document.getElementById('dayShiftSelector');
+    const shiftCountIndicator = document.getElementById('shiftCountIndicator');
 
     function formatDateKey(date) {
       const year = date.getFullYear();
@@ -516,12 +523,16 @@
 
     function init() {
       renderCalendar();
+      renderCustomShiftsManager();
       loadSelectedDayData();
       setupEventListeners();
       lucide.createIcons();
     }
 
     function renderCalendar() {
+      // Recarrega os dados do localStorage para garantir sincronia ao voltar de outra página
+      shiftData = JSON.parse(localStorage.getItem(STORAGE_KEY_SHIFTS)) || {};
+
       calendarGrid.innerHTML = '';
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth();
@@ -533,11 +544,9 @@
       const totalDays = new Date(year, month + 1, 0).getDate();
       const todayKey = formatDateKey(new Date());
 
-      let counts = { manha: 0, tarde: 0, noite: 0, folga: 0 };
-
       for (let i = 0; i < firstDayIndex; i++) {
         const emptyCell = document.createElement('div');
-        emptyCell.style.height = '4.25rem';
+        emptyCell.style.height = '4.5rem';
         calendarGrid.appendChild(emptyCell);
       }
 
@@ -552,32 +561,37 @@
         dayBtn.className = `day-cell ${isSelected ? 'selected' : ''}`;
         dayBtn.onclick = () => selectDate(dateKey);
 
-        let shiftBadge = '';
-        if (data && data.shift) {
-          counts[data.shift] = (counts[data.shift] || 0) + 1;
-          const shiftNames = { manha: 'Manhã', tarde: 'Tarde', noite: 'Noite', folga: 'Folga' };
-          shiftBadge = `<span class="shift-tag shift-${data.shift}">${shiftNames[data.shift]}</span>`;
+        // Preenchimento Proporcional (1, 2 ou 3 cores divididas)
+        let bgStyle = 'background: rgba(255, 255, 255, 0.02);';
+        if (data && data.shiftIds && data.shiftIds.length > 0) {
+          const colors = data.shiftIds.map(id => {
+            const s = customShifts.find(cs => cs.id === id);
+            return s ? s.color : null;
+          }).filter(Boolean);
+
+          if (colors.length === 1) {
+            bgStyle = `background: ${colors[0]};`;
+          } else if (colors.length === 2) {
+            bgStyle = `background: linear-gradient(135deg, ${colors[0]} 50%, ${colors[1]} 50%);`;
+          } else if (colors.length >= 3) {
+            bgStyle = `background: linear-gradient(135deg, ${colors[0]} 33.33%, ${colors[1]} 33.33%, ${colors[1]} 66.66%, ${colors[2]} 66.66%);`;
+          }
         }
 
+        dayBtn.style.cssText += bgStyle;
+
         const noteDot = (data && data.notes && data.notes.trim() !== '') 
-          ? `<div style="width: 5px; height: 5px; background: var(--accent-neon); border-radius: 50%; position: absolute; top: 6px; right: 6px; box-shadow: var(--green-glow);"></div>` 
+          ? `<div style="width: 6px; height: 6px; background: #fff; border-radius: 50%; position: absolute; top: 6px; right: 6px; box-shadow: 0 0 8px rgba(0,0,0,0.8);"></div>` 
           : '';
 
         dayBtn.innerHTML = `
           ${noteDot}
-          <span class="day-number" style="color: ${isToday ? 'var(--accent-neon)' : '#d4d4d8'}; ${isToday ? 'text-decoration: underline;' : ''}">
+          <span class="day-number" style="${isToday && (!data || !data.shiftIds || data.shiftIds.length === 0) ? 'color: var(--accent-neon); text-decoration: underline;' : ''}">
             ${day}
           </span>
-          ${shiftBadge}
         `;
         calendarGrid.appendChild(dayBtn);
       }
-
-      // Atualiza contadores do mês
-      document.getElementById('countManha').textContent = counts.manha;
-      document.getElementById('countTarde').textContent = counts.tarde;
-      document.getElementById('countNoite').textContent = counts.noite;
-      document.getElementById('countFolga').textContent = counts.folga;
     }
 
     function selectDate(dateKey) {
@@ -586,20 +600,119 @@
       loadSelectedDayData();
     }
 
-    function loadSelectedDayData() {
-      selectedDateTitle.textContent = formatReadableDate(selectedDateStr);
-      const data = shiftData[selectedDateStr] || {};
-      
-      activeShift = data.shift || null;
-      dayNotesInput.value = data.notes || '';
+    function renderCustomShiftsManager() {
+      customShiftsList.innerHTML = '';
+      if (customShifts.length === 0) {
+        customShiftsList.innerHTML = `<span style="font-size: 0.75rem; color: var(--text-muted);">Nenhum turno criado ainda.</span>`;
+        return;
+      }
 
-      shiftButtons.forEach(btn => {
-        if (btn.getAttribute('data-shift') === activeShift) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
+      customShifts.forEach(shift => {
+        const row = document.createElement('div');
+        row.className = 'custom-shift-row';
+        row.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background-color: ${shift.color};"></div>
+            <span style="font-weight: 600; color: #fff;">${shift.name}</span>
+          </div>
+          <button onclick="deleteCustomShift('${shift.id}')" style="background: transparent; border: none; color: #71717a; cursor: pointer; font-size: 0.75rem;" title="Apagar">✕</button>
+        `;
+        customShiftsList.appendChild(row);
+      });
+    }
+
+    function loadSelectedDayData() {
+      shiftData = JSON.parse(localStorage.getItem(STORAGE_KEY_SHIFTS)) || {};
+      selectedDateTitle.textContent = formatReadableDate(selectedDateStr);
+      const data = shiftData[selectedDateStr] || { shiftIds: [], notes: '' };
+      
+      dayNotesInput.value = data.notes || '';
+      renderDayShiftSelector(data.shiftIds || []);
+    }
+
+    function renderDayShiftSelector(selectedIds) {
+      dayShiftSelector.innerHTML = '';
+      shiftCountIndicator.textContent = `${selectedIds.length}/3 selecionados`;
+
+      if (customShifts.length === 0) {
+        dayShiftSelector.innerHTML = `<span style="font-size: 0.75rem; color: var(--text-muted);">Crie turnos ao lado primeiro.</span>`;
+        return;
+      }
+
+      customShifts.forEach(shift => {
+        const isChecked = selectedIds.includes(shift.id);
+        const item = document.createElement('div');
+        item.className = `shift-checkbox-item ${isChecked ? 'checked' : ''}`;
+        
+        item.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 14px; height: 14px; border-radius: 50%; background-color: ${shift.color};"></div>
+            <span style="font-size: 0.875rem; font-weight: 600; color: #fff;">${shift.name}</span>
+          </div>
+          <div style="width: 18px; height: 18px; border-radius: 4px; border: 2px solid ${isChecked ? 'var(--accent-green)' : '#3f3f46'}; background: ${isChecked ? 'var(--accent-green)' : 'transparent'}; display: flex; align-items: center; justify-content: center; color: #000; font-size: 11px; font-weight: bold;">
+            ${isChecked ? '✓' : ''}
+          </div>
+        `;
+
+        item.onclick = () => {
+          let currentSelected = [...selectedIds];
+          if (isChecked) {
+            currentSelected = currentSelected.filter(id => id !== shift.id);
+          } else {
+            if (currentSelected.length >= 3) {
+              alert('Você só pode selecionar no máximo 3 turnos por dia!');
+              return;
+            }
+            currentSelected.push(shift.id);
+          }
+          if (!shiftData[selectedDateStr]) shiftData[selectedDateStr] = {};
+          shiftData[selectedDateStr].shiftIds = currentSelected;
+          
+          // Salva imediatamente ao selecionar para garantir persistência robusta
+          localStorage.setItem(STORAGE_KEY_SHIFTS, JSON.stringify(shiftData));
+
+          renderDayShiftSelector(currentSelected);
+          renderCalendar();
+        };
+
+        dayShiftSelector.appendChild(item);
+      });
+    }
+
+    createShiftForm.onsubmit = (e) => {
+      e.preventDefault();
+      const name = document.getElementById('newShiftName').value.trim();
+      const color = document.getElementById('newShiftColor').value;
+      if (!name) return;
+
+      const newShift = {
+        id: Date.now().toString(),
+        name,
+        color
+      };
+
+      customShifts.push(newShift);
+      localStorage.setItem(STORAGE_KEY_CUSTOM, JSON.stringify(customShifts));
+      document.getElementById('newShiftName').value = '';
+      renderCustomShiftsManager();
+      loadSelectedDayData();
+    };
+
+    function deleteCustomShift(id) {
+      if (!confirm('Deseja apagar este turno? Ele será removido dos dias agendados.')) return;
+      customShifts = customShifts.filter(s => s.id !== id);
+      localStorage.setItem(STORAGE_KEY_CUSTOM, JSON.stringify(customShifts));
+
+      Object.keys(shiftData).forEach(date => {
+        if (shiftData[date].shiftIds) {
+          shiftData[date].shiftIds = shiftData[date].shiftIds.filter(shiftId => shiftId !== id);
         }
       });
+      localStorage.setItem(STORAGE_KEY_SHIFTS, JSON.stringify(shiftData));
+
+      renderCustomShiftsManager();
+      renderCalendar();
+      loadSelectedDayData();
     }
 
     function setupEventListeners() {
@@ -607,38 +720,26 @@
       document.getElementById('nextMonthBtn').onclick = () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); };
       document.getElementById('todayBtn').onclick = () => { currentDate = new Date(); selectedDateStr = formatDateKey(new Date()); renderCalendar(); loadSelectedDayData(); };
 
-      shiftButtons.forEach(btn => {
-        btn.onclick = () => {
-          const shift = btn.getAttribute('data-shift');
-          if (activeShift === shift) {
-            activeShift = null;
-            btn.classList.remove('active');
-          } else {
-            activeShift = shift;
-            shiftButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-          }
-        };
-      });
-
       document.getElementById('saveDayBtn').onclick = () => {
         const notes = dayNotesInput.value.trim();
-        if (activeShift || notes) {
-          shiftData[selectedDateStr] = { shift: activeShift, notes };
+        const currentData = shiftData[selectedDateStr] || { shiftIds: [] };
+
+        if ((currentData.shiftIds && currentData.shiftIds.length > 0) || notes) {
+          shiftData[selectedDateStr] = { shiftIds: currentData.shiftIds || [], notes };
         } else {
           delete shiftData[selectedDateStr];
         }
-        localStorage.setItem('hp_shifts', JSON.stringify(shiftData));
+
+        localStorage.setItem(STORAGE_KEY_SHIFTS, JSON.stringify(shiftData));
         renderCalendar();
-        alert('Informações do dia salvas com sucesso!');
+        alert('Informações do dia guardadas com sucesso!');
       };
 
       document.getElementById('clearDayBtn').onclick = () => {
         delete shiftData[selectedDateStr];
-        localStorage.setItem('hp_shifts', JSON.stringify(shiftData));
-        activeShift = null;
+        localStorage.setItem(STORAGE_KEY_SHIFTS, JSON.stringify(shiftData));
         dayNotesInput.value = '';
-        shiftButtons.forEach(b => b.classList.remove('active'));
+        loadSelectedDayData();
         renderCalendar();
       };
     }
