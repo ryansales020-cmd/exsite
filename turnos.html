@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habit Pulse - Calendário de Turnos</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    
+    :root {
+      --bg-main: #030407;
+      --bg-card: rgba(13, 16, 23, 0.75);
+      --bg-card-hover: rgba(22, 27, 38, 0.85);
+      --border-card: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(34, 197, 94, 0.3);
+      --accent-green: #22c55e;
+      --accent-neon: #4ade80;
+      --green-glow: 0 0 25px rgba(34, 197, 94, 0.4);
+      --text-main: #f4f4f5;
+      --text-muted: #71717a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-main);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(34, 197, 94, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-main);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2937;
+      border-radius: 99px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-green);
+    }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--border-card);
+      background: rgba(3, 4, 7, 0.8);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      width: 100%;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      box-shadow: var(--green-glow);
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(20, 24, 33, 0.9);
+      border: 1px solid var(--border-card);
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 0.6rem 1.125rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+      border-color: var(--accent-green);
+      color: var(--accent-neon);
+      box-shadow: var(--green-glow);
+    }
+
+    /* Layout Principal */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 900px) {
+      .main-grid {
+        grid-template-columns: 1.3fr 1fr;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 1.75rem;
+      padding: 1.75rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Calendário */
+    .calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.75rem;
+    }
+
+    .calendar-nav {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.35rem;
+      border-radius: 1rem;
+      border: 1px solid var(--border-card);
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.5rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .weekdays-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.875rem;
+    }
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+    }
+
+    .day-cell {
+      position: relative;
+      height: 4.25rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.4rem;
+      border-radius: 1.25rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .day-cell:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .day-cell.selected {
+      background: rgba(34, 197, 94, 0.12);
+      border-color: var(--accent-green);
+      box-shadow: var(--green-glow);
+    }
+
+    .day-number {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #d4d4d8;
+    }
+
+    .shift-tag {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.4rem;
+      text-transform: uppercase;
+      width: 100%;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Cores dos Turnos */
+    .shift-manha { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); }
+    .shift-tarde { background: rgba(249, 115, 22, 0.2); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.4); }
+    .shift-noite { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+    .shift-folga { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
+    .shift-custom { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+
+    /* Painel do Dia Selecionado */
+    .shift-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.625rem;
+      margin-top: 1rem;
+    }
+
+    .shift-btn {
+      padding: 0.875rem;
+      border-radius: 1rem;
+      border: 1px solid var(--border-card);
+      background: #030407;
+      color: var(--text-main);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .shift-btn:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .shift-btn.active {
+      border-color: var(--accent-green);
+      box-shadow: var(--green-glow);
+    }
+
+    .notes-textarea {
+      width: 100%;
+      height: 110px;
+      background-color: #030407;
+      border: 1px solid var(--border-card);
+      border-radius: 1rem;
+      padding: 0.9375rem 1.125rem;
+      font-size: 0.875rem;
+      color: #fff;
+      outline: none;
+      resize: none;
+      font-family: inherit;
+      margin-top: 0.75rem;
+      transition: all 0.2s;
+    }
+
+    .notes-textarea:focus {
+      border-color: var(--accent-green);
+      box-shadow: var(--green-glow);
+    }
+
+    /* Card Resumo do Mês */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .summary-card {
+      background: rgba(3, 4, 7, 0.6);
+      border: 1px solid var(--border-card);
+      border-radius: 1rem;
+      padding: 0.875rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn-save-day {
+      width: 100%;
+      background: linear-gradient(135deg, #22c55e, #15803d);
+      color: #000;
+      font-weight: 800;
+      font-size: 0.875rem;
+      padding: 0.875rem;
+      border-radius: 1rem;
+      border: none;
+      cursor: pointer;
+      margin-top: 1.25rem;
+      box-shadow: var(--green-glow);
+      transition: all 0.2s;
+    }
+
+    .btn-save-day:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(34, 197, 94, 0.6);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.75rem;
+      color: #3f3f46;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo-area">
+          <div class="logo-icon">
+            <i data-lucide="briefcase" style="width: 26px; height: 26px; stroke-width: 2.5;"></i>
+          </div>
+          <div>
+            <h1 style="font-size: 1.35rem; font-weight: 800; color: #fff; letter-spacing: -0.02em;">Turnos & Notas</h1>
+            <p style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Calendário de Trabalho</p>
+          </div>
+        </div>
+
+        <div>
+          <a href="index.html" class="nav-link">
+            <i data-lucide="check-circle-2" style="width: 18px; height: 18px; color: var(--accent-neon);"></i>
+            <span>Monitor de Hábitos</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main>
+    <div class="main-grid">
+      
+      <!-- Lado Esquerdo: Calendário Principal -->
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div class="card">
+          <div class="calendar-header">
+            <div>
+              <h2 id="calendarMonthYear" style="font-size: 1.45rem; font-weight: 800; text-transform: capitalize; color: #fff;">Carregando...</h2>
+              <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.2rem;">Selecione o dia para atribuir turno ou adicionar observações</p>
+            </div>
+            <div class="calendar-nav">
+              <button id="prevMonthBtn" class="icon-btn"><i data-lucide="chevron-left" style="width: 20px; height: 20px;"></i></button>
+              <button id="todayBtn" class="icon-btn" style="padding: 0.4rem 0.875rem; font-size: 0.75rem; font-weight: 700;">Hoje</button>
+              <button id="nextMonthBtn" class="icon-btn"><i data-lucide="chevron-right" style="width: 20px; height: 20px;"></i></button>
+            </div>
+          </div>
+
+          <div class="weekdays-grid">
+            <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+          </div>
+
+          <div id="calendarGrid" class="days-grid">
+            <!-- Renderizado via JS -->
+          </div>
+        </div>
+
+        <!-- Card Resumo do Mês -->
+        <div class="card">
+          <h3 style="font-size: 1.125rem; font-weight: 800; color: #fff;">Resumo do Mês</h3>
+          <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.15rem;">Contagem automática dos seus turnos agendados</p>
+          
+          <div class="summary-grid">
+            <div class="summary-card">
+              <span style="font-size: 0.8125rem; color: #fbbf24; font-weight: 700;">Manhã</span>
+              <strong id="countManha" style="font-size: 1.25rem; color: #fff;">0</strong>
+            </div>
+            <div class="summary-card">
+              <span style="font-size: 0.8125rem; color: #f97316; font-weight: 700;">Tarde</span>
+              <strong id="countTarde" style="font-size: 1.25rem; color: #fff;">0</strong>
+            </div>
+            <div class="summary-card">
+              <span style="font-size: 0.8125rem; color: #c084fc; font-weight: 700;">Noite</span>
+              <strong id="countNoite" style="font-size: 1.25rem; color: #fff;">0</strong>
+            </div>
+            <div class="summary-card">
+              <span style="font-size: 0.8125rem; color: #4ade80; font-weight: 700;">Folga</span>
+              <strong id="countFolga" style="font-size: 1.25rem; color: #fff;">0</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lado Direito: Editor de Turno e Notas do Dia -->
+      <div>
+        <div class="card" style="position: sticky; top: 96px;">
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: #fff;">Detalhes do Dia</h3>
+          <p id="selectedDateTitle" style="font-size: 0.8125rem; color: var(--accent-neon); font-weight: 700; margin-top: 0.2rem;">Hoje</p>
+
+          <!-- Seletor de Turno -->
+          <div style="margin-top: 1.5rem;">
+            <label style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">Selecione o Turno</label>
+            <div class="shift-selector">
+              <button class="shift-btn" data-shift="manha">
+                <i data-lucide="sun" style="width: 18px; height: 18px; color: #fbbf24;"></i>
+                <span>Manhã</span>
+              </button>
+              <button class="shift-btn" data-shift="tarde">
+                <i data-lucide="sunset" style="width: 18px; height: 18px; color: #f97316;"></i>
+                <span>Tarde</span>
+              </button>
+              <button class="shift-btn" data-shift="noite">
+                <i data-lucide="moon" style="width: 18px; height: 18px; color: #c084fc;"></i>
+                <span>Noite</span>
+              </button>
+              <button class="shift-btn" data-shift="folga">
+                <i data-lucide="coffee" style="width: 18px; height: 18px; color: #4ade80;"></i>
+                <span>Folga</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Anotações -->
+          <div style="margin-top: 1.5rem;">
+            <label style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">Observações / Notas</label>
+            <textarea id="dayNotesInput" class="notes-textarea" placeholder="Digite horários extras, tarefas do trabalho ou lembretes..."></textarea>
+          </div>
+
+          <button id="saveDayBtn" class="btn-save-day">Guardar Informações</button>
+          <button id="clearDayBtn" style="width: 100%; background: transparent; border: none; color: #ef4444; font-size: 0.8125rem; font-weight: 700; margin-top: 0.75rem; cursor: pointer;">Limpar Dia</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    Habit Pulse &copy; Calendário de Turnos de Trabalho
+  </footer>
+
+  <script>
+    // Armazenamento: { "YYYY-MM-DD": { shift: "manha|tarde|noite|folga", notes: "texto..." } }
+    let shiftData = JSON.parse(localStorage.getItem('hp_shifts')) || {};
+    
+    let currentDate = new Date();
+    let selectedDateStr = formatDateKey(new Date());
+    let activeShift = null;
+
+    const calendarGrid = document.getElementById('calendarGrid');
+    const calendarMonthYear = document.getElementById('calendarMonthYear');
+    const selectedDateTitle = document.getElementById('selectedDateTitle');
+    const dayNotesInput = document.getElementById('dayNotesInput');
+    const shiftButtons = document.querySelectorAll('.shift-btn');
+
+    function formatDateKey(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function formatReadableDate(dateKey) {
+      const [y, m, d] = dateKey.split('-').map(Number);
+      const date = new Date(y, m - 1, d);
+      if (dateKey === formatDateKey(new Date())) return 'Hoje';
+      return date.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+    }
+
+    function init() {
+      renderCalendar();
+      loadSelectedDayData();
+      setupEventListeners();
+      lucide.createIcons();
+    }
+
+    function renderCalendar() {
+      calendarGrid.innerHTML = '';
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+
+      const monthName = currentDate.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+      calendarMonthYear.textContent = monthName;
+
+      const firstDayIndex = new Date(year, month, 1).getDay();
+      const totalDays = new Date(year, month + 1, 0).getDate();
+      const todayKey = formatDateKey(new Date());
+
+      let counts = { manha: 0, tarde: 0, noite: 0, folga: 0 };
+
+      for (let i = 0; i < firstDayIndex; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.style.height = '4.25rem';
+        calendarGrid.appendChild(emptyCell);
+      }
+
+      for (let day = 1; day <= totalDays; day++) {
+        const dateObj = new Date(year, month, day);
+        const dateKey = formatDateKey(dateObj);
+        const data = shiftData[dateKey];
+        const isSelected = dateKey === selectedDateStr;
+        const isToday = dateKey === todayKey;
+
+        const dayBtn = document.createElement('button');
+        dayBtn.className = `day-cell ${isSelected ? 'selected' : ''}`;
+        dayBtn.onclick = () => selectDate(dateKey);
+
+        let shiftBadge = '';
+        if (data && data.shift) {
+          counts[data.shift] = (counts[data.shift] || 0) + 1;
+          const shiftNames = { manha: 'Manhã', tarde: 'Tarde', noite: 'Noite', folga: 'Folga' };
+          shiftBadge = `<span class="shift-tag shift-${data.shift}">${shiftNames[data.shift]}</span>`;
+        }
+
+        const noteDot = (data && data.notes && data.notes.trim() !== '') 
+          ? `<div style="width: 5px; height: 5px; background: var(--accent-neon); border-radius: 50%; position: absolute; top: 6px; right: 6px; box-shadow: var(--green-glow);"></div>` 
+          : '';
+
+        dayBtn.innerHTML = `
+          ${noteDot}
+          <span class="day-number" style="color: ${isToday ? 'var(--accent-neon)' : '#d4d4d8'}; ${isToday ? 'text-decoration: underline;' : ''}">
+            ${day}
+          </span>
+          ${shiftBadge}
+        `;
+        calendarGrid.appendChild(dayBtn);
+      }
+
+      // Atualiza contadores do mês
+      document.getElementById('countManha').textContent = counts.manha;
+      document.getElementById('countTarde').textContent = counts.tarde;
+      document.getElementById('countNoite').textContent = counts.noite;
+      document.getElementById('countFolga').textContent = counts.folga;
+    }
+
+    function selectDate(dateKey) {
+      selectedDateStr = dateKey;
+      renderCalendar();
+      loadSelectedDayData();
+    }
+
+    function loadSelectedDayData() {
+      selectedDateTitle.textContent = formatReadableDate(selectedDateStr);
+      const data = shiftData[selectedDateStr] || {};
+      
+      activeShift = data.shift || null;
+      dayNotesInput.value = data.notes || '';
+
+      shiftButtons.forEach(btn => {
+        if (btn.getAttribute('data-shift') === activeShift) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    function setupEventListeners() {
+      document.getElementById('prevMonthBtn').onclick = () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); };
+      document.getElementById('nextMonthBtn').onclick = () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); };
+      document.getElementById('todayBtn').onclick = () => { currentDate = new Date(); selectedDateStr = formatDateKey(new Date()); renderCalendar(); loadSelectedDayData(); };
+
+      shiftButtons.forEach(btn => {
+        btn.onclick = () => {
+          const shift = btn.getAttribute('data-shift');
+          if (activeShift === shift) {
+            activeShift = null;
+            btn.classList.remove('active');
+          } else {
+            activeShift = shift;
+            shiftButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+          }
+        };
+      });
+
+      document.getElementById('saveDayBtn').onclick = () => {
+        const notes = dayNotesInput.value.trim();
+        if (activeShift || notes) {
+          shiftData[selectedDateStr] = { shift: activeShift, notes };
+        } else {
+          delete shiftData[selectedDateStr];
+        }
+        localStorage.setItem('hp_shifts', JSON.stringify(shiftData));
+        renderCalendar();
+        alert('Informações do dia salvas com sucesso!');
+      };
+
+      document.getElementById('clearDayBtn').onclick = () => {
+        delete shiftData[selectedDateStr];
+        localStorage.setItem('hp_shifts', JSON.stringify(shiftData));
+        activeShift = null;
+        dayNotesInput.value = '';
+        shiftButtons.forEach(b => b.classList.remove('active'));
+        renderCalendar();
+      };
+    }
+
+    init();
+  </script>
+</body>
+</html>
