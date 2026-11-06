@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Habit Pulse - Dashboard Neon</title>
+  <title>Habit Pulse - Acesso à Conta</title>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -11,7 +11,6 @@
     :root {
       --bg-main: #030407;
       --bg-card: rgba(13, 16, 23, 0.75);
-      --bg-card-hover: rgba(22, 27, 38, 0.85);
       --border-card: rgba(255, 255, 255, 0.08);
       --border-accent: rgba(34, 197, 94, 0.3);
       --accent-green: #22c55e;
@@ -39,37 +38,20 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      align-items: center;
     }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--bg-main);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #1f2937;
-      border-radius: 99px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-green);
-    }
-
-    /* Header Responsivo */
     header {
+      width: 100%;
       border-bottom: 1px solid var(--border-card);
       background: rgba(3, 4, 7, 0.85);
       backdrop-filter: blur(20px);
-      position: sticky;
-      top: 0;
-      z-index: 40;
     }
 
     .container {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 0 1.25rem;
+      padding: 0 1rem;
       width: 100%;
     }
 
@@ -77,9 +59,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 76px;
-      padding: 0.75rem 0;
-      gap: 1rem;
+      height: 70px;
     }
 
     .logo-area {
@@ -89,36 +69,15 @@
     }
 
     .logo-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #000;
       box-shadow: var(--green-glow);
-      flex-shrink: 0;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .streak-badge {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(20, 24, 33, 0.9);
-      border: 1px solid var(--border-accent);
-      padding: 0.5rem 1rem;
-      border-radius: 9999px;
-      font-size: 0.8125rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      white-space: nowrap;
     }
 
     .nav-link {
@@ -134,7 +93,6 @@
       font-size: 0.8125rem;
       font-weight: 700;
       transition: all 0.2s ease;
-      white-space: nowrap;
     }
 
     .nav-link:hover {
@@ -143,373 +101,70 @@
       box-shadow: var(--green-glow);
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, #22c55e, #15803d);
-      color: #000;
-      font-weight: 800;
-      font-size: 0.8125rem;
-      padding: 0.625rem 1.125rem;
-      border-radius: 0.875rem;
-      border: none;
-      cursor: pointer;
+    main {
+      width: 100%;
+      max-width: 440px;
+      padding: 2rem 1rem;
+      flex: 1;
       display: flex;
       align-items: center;
-      gap: 0.375rem;
-      box-shadow: var(--green-glow);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      white-space: nowrap;
+      justify-content: center;
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(34, 197, 94, 0.6);
-      background: linear-gradient(135deg, #4ade80, #22c55e);
-    }
-
-    /* Media Query para Telemóveis / Ecrãs Estreitos */
-    @media (max-width: 768px) {
-      .header-content {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 1rem 0;
-      }
-      .logo-area {
-        justify-content: space-between;
-        width: 100%;
-      }
-      .header-actions {
-        width: 100%;
-        justify-content: space-between;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.5rem;
-      }
-      .nav-link, .streak-badge, .btn-primary {
-        justify-content: center;
-        width: 100%;
-        padding: 0.6rem 0.5rem;
-        font-size: 0.75rem;
-      }
-    }
-
-    /* Layout Principal */
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 1.5rem 1rem;
-      flex: 1;
-      width: 100%;
-    }
-
-    .main-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    @media (min-width: 900px) {
-      .main-grid {
-        grid-template-columns: 1.3fr 1fr;
-      }
-    }
-
-    /* Cards com Vidro e Bordas Neon */
-    .card {
+    .auth-card {
       background: var(--bg-card);
       border: 1px solid var(--border-card);
       border-radius: 1.5rem;
-      padding: 1.25rem;
+      padding: 2rem 1.5rem;
       backdrop-filter: blur(16px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-      transition: border-color 0.3s ease;
+      width: 100%;
     }
 
-    @media (min-width: 640px) {
-      .card {
-        padding: 1.75rem;
-      }
-    }
-
-    /* Calendário */
-    .calendar-header {
+    .tabs-container {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-
-    .calendar-nav {
-      display: flex;
-      gap: 0.375rem;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 0.35rem;
-      border-radius: 1rem;
+      background: rgba(3, 4, 7, 0.8);
       border: 1px solid var(--border-card);
+      border-radius: 0.875rem;
+      padding: 4px;
+      margin-bottom: 1.5rem;
     }
 
-    .icon-btn {
+    .tab-btn {
+      flex: 1;
+      padding: 0.625rem;
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 0.5rem;
-      border-radius: 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      border-radius: 0.625rem;
       cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .icon-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-    }
-
-    .weekdays-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 0.375rem;
-      text-align: center;
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.75rem;
-    }
-
-    .days-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 0.375rem;
-    }
-
-    .day-cell {
-      position: relative;
-      height: 3.5rem;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 1rem;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @media (min-width: 640px) {
-      .day-cell {
-        height: 4rem;
-        border-radius: 1.25rem;
-      }
-    }
-
-    .day-cell:hover {
-      background: rgba(255, 255, 255, 0.06);
-      transform: translateY(-2px);
-    }
-
-    .day-cell.selected {
-      background: rgba(34, 197, 94, 0.12);
-      border-color: var(--accent-green);
-      box-shadow: var(--green-glow);
-    }
-
-    .calendar-ring-circle {
-      transition: stroke-dashoffset 0.5s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s ease;
-      transform: rotate(-90deg);
-      transform-origin: 50% 50%;
-    }
-
-    /* Legenda */
-    .legend {
-      margin-top: 1.5rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border-card);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .legend-dot {
-      width: 0.625rem;
-      height: 0.625rem;
-      border-radius: 9999px;
-    }
-
-    /* Stats Card */
-    .stats-card {
-      margin-top: 1.25rem;
-      background: linear-gradient(135deg, rgba(16, 24, 38, 0.8), rgba(6, 9, 14, 0.95));
-      border: 1px solid var(--border-accent);
-      border-radius: 1.25rem;
-      padding: 1.125rem 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    }
-
-    .stats-icon-box {
-      padding: 0.75rem;
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.3);
-      border-radius: 1rem;
-      color: var(--accent-neon);
-      box-shadow: var(--green-glow);
-    }
-
-    /* Lista de Hábitos */
-    .habit-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.25rem;
-    }
-
-    .badge-count {
-      font-size: 0.75rem;
-      background: rgba(34, 197, 94, 0.15);
-      color: var(--accent-neon);
-      padding: 0.35rem 0.875rem;
-      border-radius: 9999px;
-      font-weight: 800;
-      border: 1px solid var(--border-accent);
-    }
-
-    .habit-list-container {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      max-height: 420px;
-      overflow-y: auto;
-      padding-right: 0.25rem;
-    }
-
-    .habit-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem;
-      border-radius: 1rem;
-      border: 1px solid var(--border-card);
-      background: rgba(6, 8, 12, 0.6);
       transition: all 0.25s ease;
     }
 
-    .habit-item:hover {
-      border-color: rgba(255, 255, 255, 0.15);
-      background: var(--bg-card-hover);
-    }
-
-    .habit-item.done {
-      background: rgba(10, 15, 22, 0.3);
-      border-color: rgba(34, 197, 94, 0.2);
-    }
-
-    .habit-checkbox {
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 0.625rem;
-      border: 2px solid #3f3f46;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      background: transparent;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      color: transparent;
-      flex-shrink: 0;
-    }
-
-    .habit-checkbox.done {
-      background: var(--accent-green);
-      border-color: var(--accent-green);
-      color: #000;
-      box-shadow: var(--green-glow);
-    }
-
-    .habit-title {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text-main);
-      transition: all 0.2s;
-      word-break: break-word;
-    }
-
-    .habit-item.done .habit-title {
-      text-decoration: line-through;
-      color: var(--text-muted);
-    }
-
-    .btn-delete {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      padding: 0.5rem;
-      border-radius: 0.625rem;
-      transition: all 0.2s;
-      flex-shrink: 0;
-    }
-
-    .btn-delete:hover {
-      color: #ef4444;
-      background: rgba(239, 68, 68, 0.12);
-    }
-
-    /* Modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(12px);
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease;
-      padding: 1rem;
-    }
-
-    .modal-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .modal-content {
-      background: #090c12;
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.1));
+      color: var(--accent-neon);
       border: 1px solid var(--border-accent);
-      width: 100%;
-      max-width: 420px;
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-      transform: scale(0.9);
-      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), var(--green-glow);
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.15);
     }
 
-    .modal-overlay.active .modal-content {
-      transform: scale(1);
+    .form-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    .form-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
     }
 
     .form-group {
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
     }
 
     .form-label {
@@ -517,9 +172,23 @@
       font-size: 0.75rem;
       font-weight: 800;
       color: var(--text-muted);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.375rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      color: var(--text-muted);
+      width: 18px;
+      height: 18px;
     }
 
     .form-input {
@@ -527,12 +196,12 @@
       background-color: #030407;
       border: 1px solid var(--border-card);
       border-radius: 0.875rem;
-      padding: 0.875rem 1rem;
+      padding: 0.75rem 1rem 0.75rem 2.75rem;
       font-size: 0.875rem;
       color: #fff;
       outline: none;
-      transition: all 0.2s;
       font-family: inherit;
+      transition: all 0.2s;
     }
 
     .form-input:focus {
@@ -540,38 +209,57 @@
       box-shadow: var(--green-glow);
     }
 
-    .icon-picker {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0.5rem;
-    }
-
-    .icon-pick-btn {
-      padding: 0.75rem;
-      background-color: #030407;
-      border: 1px solid var(--border-card);
-      border-radius: 0.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
+    .btn-submit {
+      background: linear-gradient(135deg, #22c55e, #15803d);
+      color: #000;
+      font-weight: 800;
+      font-size: 0.875rem;
+      padding: 0.875rem;
+      border-radius: 0.875rem;
+      border: none;
       cursor: pointer;
       transition: all 0.2s;
+      width: 100%;
+      margin-top: 0.5rem;
+      box-shadow: var(--green-glow);
     }
 
-    .icon-pick-btn.selected {
-      border-color: var(--accent-green);
-      color: var(--accent-neon);
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 25px rgba(34, 197, 94, 0.6);
+    }
+
+    .message-box {
+      display: none;
+      padding: 0.75rem;
+      border-radius: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .message-box.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+    }
+
+    .message-box.success {
+      display: block;
       background: rgba(34, 197, 94, 0.15);
-      box-shadow: var(--green-glow);
+      border: 1px solid var(--border-accent);
+      color: var(--accent-neon);
     }
 
     footer {
       text-align: center;
-      padding: 1.75rem;
+      padding: 1.5rem;
       font-size: 0.75rem;
       color: #3f3f46;
       border-top: 1px solid rgba(255, 255, 255, 0.03);
+      width: 100%;
     }
   </style>
 </head>
@@ -583,403 +271,178 @@
       <div class="header-content">
         <div class="logo-area">
           <div class="logo-icon">
-            <i data-lucide="check-circle-2" style="width: 26px; height: 26px; stroke-width: 2.5;"></i>
+            <i data-lucide="check-circle-2" style="width: 22px; height: 22px; stroke-width: 2.5;"></i>
           </div>
           <div>
-            <h1 style="font-size: 1.2rem; font-weight: 800; color: #fff; letter-spacing: -0.02em;">Habit Pulse</h1>
-            <p style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600;">Monitoramento de Hábitos</p>
+            <h1 style="font-size: 1.1rem; font-weight: 800; color: #fff; letter-spacing: -0.02em;">Habit Pulse</h1>
           </div>
         </div>
 
-        <div class="header-actions">
-          <a href="turnos.html" class="nav-link">
-            <i data-lucide="briefcase" style="width: 16px; height: 16px; color: var(--accent-neon);"></i>
-            <span>Turnos</span>
-          </a>
-          <div class="streak-badge">
-            <i data-lucide="flame" style="width: 16px; height: 16px; color: var(--accent-neon);"></i>
-            <span style="color: #d4d4d8;">Ofensiva: <strong id="streakCount" style="color: var(--accent-neon); font-weight: 800;">0</strong></span>
-          </div>
-          <button id="openModalBtn" class="btn-primary">
-            <i data-lucide="plus" style="width: 16px; height: 16px; stroke-width: 3;"></i>
-            <span>Novo</span>
-          </button>
-        </div>
+        <a href="habitos.html" class="nav-link">
+          <i data-lucide="layout-dashboard" style="width: 16px; height: 16px;"></i>
+          <span>Painel</span>
+        </a>
       </div>
     </div>
   </header>
 
   <!-- Conteúdo Principal -->
   <main>
-    <div class="main-grid">
+    <div class="auth-card">
       
-      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-        <!-- Card Calendário -->
-        <div class="card">
-          <div class="calendar-header">
-            <div>
-              <h2 id="calendarMonthYear" style="font-size: 1.25rem; font-weight: 800; text-transform: capitalize; color: #fff;">A carregar...</h2>
-              <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">Selecione um dia para monitorar suas tarefas</p>
-            </div>
-            <div class="calendar-nav">
-              <button id="prevMonthBtn" class="icon-btn"><i data-lucide="chevron-left" style="width: 18px; height: 18px;"></i></button>
-              <button id="todayBtn" class="icon-btn" style="padding: 0.4rem 0.75rem; font-size: 0.75rem; font-weight: 700;">Hoje</button>
-              <button id="nextMonthBtn" class="icon-btn"><i data-lucide="chevron-right" style="width: 18px; height: 18px;"></i></button>
-            </div>
-          </div>
-
-          <div class="weekdays-grid">
-            <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
-          </div>
-
-          <div id="calendarGrid" class="days-grid">
-            <!-- Renderizado via JS -->
-          </div>
-
-          <div class="legend">
-            <div class="legend-item">
-              <div class="legend-dot" style="border: 1px solid #3f3f46; background: #090c12;"></div>
-              <span>Pendente</span>
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot" style="border: 2px solid var(--accent-green);"></div>
-              <span>Em progresso</span>
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot" style="background: var(--accent-green); box-shadow: var(--green-glow);"></div>
-              <span>100% Concluído</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Estatísticas do Dia Selecionado -->
-        <div class="stats-card">
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <div class="stats-icon-box">
-              <i data-lucide="target" style="width: 24px; height: 24px;"></i>
-            </div>
-            <div>
-              <h4 style="font-size: 0.875rem; font-weight: 700; color: #f4f4f5;">Progresso do Dia</h4>
-              <p id="selectedDateText" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.1rem;">Hoje</p>
-            </div>
-          </div>
-          <div style="text-align: right;">
-            <span id="selectedDateProgressText" style="font-size: 1.5rem; font-weight: 800; color: var(--accent-neon); text-shadow: var(--green-glow);">0%</span>
-          </div>
-        </div>
+      <!-- Alternador Entrar / Registar -->
+      <div class="tabs-container">
+        <button id="tabLoginBtn" class="tab-btn active" onclick="switchTab('login')">Entrar</button>
+        <button id="tabRegisterBtn" class="tab-btn" onclick="switchTab('register')">Registar</button>
       </div>
 
-      <!-- Lista de Hábitos -->
-      <div>
-        <div class="card" style="height: 100%; display: flex; flex-direction: column;">
-          <div class="habit-header">
-            <div>
-              <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff;">Hábitos</h3>
-              <p id="habitListSubtitle" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">Tarefas do dia selecionado</p>
-            </div>
-            <span id="completedRatioText" class="badge-count">0/0</span>
-          </div>
+      <!-- Caixa de Feedback -->
+      <div id="feedbackMsg" class="message-box"></div>
 
-          <div id="habitList" class="habit-list-container" style="flex: 1;">
-            <!-- Renderizado via JS -->
-          </div>
+      <!-- Formulário de Login -->
+      <form id="loginForm">
+        <h2 class="form-title">Bem-vindo de volta!</h2>
+        <p class="form-subtitle">Aceda à sua conta para sincronizar o seu progresso.</p>
 
-          <div id="emptyState" style="display: none; flex: 1; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
-            <i data-lucide="sparkles" style="width: 36px; height: 36px; margin-bottom: 0.75rem; color: #3f3f46;"></i>
-            <p style="font-size: 0.9375rem; font-weight: 700; color: #a1a1aa;">Nenhum hábito cadastrado</p>
-            <p style="font-size: 0.75rem; margin-top: 0.25rem; max-width: 220px;">Adicione um hábito para iniciar seu progresso diário!</p>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <div class="input-wrapper">
+            <i data-lucide="mail" class="input-icon"></i>
+            <input type="email" id="loginEmail" required placeholder="seuemail@exemplo.com" class="form-input">
           </div>
         </div>
-      </div>
+
+        <div class="form-group">
+          <label class="form-label">Palavra-passe</label>
+          <div class="input-wrapper">
+            <i data-lucide="lock" class="input-icon"></i>
+            <input type="password" id="loginPassword" required placeholder="••••••••" class="form-input">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Entrar na Conta</button>
+      </form>
+
+      <!-- Formulário de Cadastro -->
+      <form id="registerForm" style="display: none;">
+        <h2 class="form-title">Criar nova conta</h2>
+        <p class="form-subtitle">Registe-se para começar a gerir os seus hábitos.</p>
+
+        <div class="form-group">
+          <label class="form-label">Nome Completo</label>
+          <div class="input-wrapper">
+            <i data-lucide="user" class="input-icon"></i>
+            <input type="text" id="regName" required placeholder="O seu nome" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <div class="input-wrapper">
+            <i data-lucide="mail" class="input-icon"></i>
+            <input type="email" id="regEmail" required placeholder="seuemail@exemplo.com" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Palavra-passe</label>
+          <div class="input-wrapper">
+            <i data-lucide="lock" class="input-icon"></i>
+            <input type="password" id="regPassword" required placeholder="Mínimo 6 caracteres" class="form-input" minlength="6">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Criar Conta</button>
+      </form>
 
     </div>
   </main>
 
-  <!-- Modal Adicionar Hábito -->
-  <div id="habitModal" class="modal-overlay">
-    <div class="modal-content">
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
-        <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff;">Criar Hábito</h3>
-        <button id="closeModalBtn" class="icon-btn" style="border: none;"><i data-lucide="x" style="width: 22px; height: 22px;"></i></button>
-      </div>
-
-      <form id="habitForm">
-        <div class="form-group">
-          <label class="form-label">Nome do Hábito</label>
-          <input type="text" id="habitTitleInput" required placeholder="Ex: Meditar 10m, Ler 15 págs" class="form-input">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Escolha um Ícone</label>
-          <div class="icon-picker" id="iconPicker">
-            <button type="button" data-icon="book" class="icon-pick-btn selected"><i data-lucide="book" style="width: 20px; height: 20px;"></i></button>
-            <button type="button" data-icon="dumbbell" class="icon-pick-btn"><i data-lucide="dumbbell" style="width: 20px; height: 20px;"></i></button>
-            <button type="button" data-icon="droplet" class="icon-pick-btn"><i data-lucide="droplet" style="width: 20px; height: 20px;"></i></button>
-            <button type="button" data-icon="brain" class="icon-pick-btn"><i data-lucide="brain" style="width: 20px; height: 20px;"></i></button>
-            <button type="button" data-icon="check-circle-2" class="icon-pick-btn"><i data-lucide="check-circle-2" style="width: 20px; height: 20px;"></i></button>
-          </div>
-        </div>
-
-        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.75rem;">
-          <button type="button" id="cancelModalBtn" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.8125rem; font-weight: 700; cursor: pointer; padding: 0.625rem 1rem;">Cancelar</button>
-          <button type="submit" class="btn-primary">Salvar Hábito</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <footer>
-    Habit Pulse &copy; Monitoramento de Hábitos Diários
+    Habit Pulse &copy; Monitorização de Hábitos e Tempo de Uso
   </footer>
 
   <script>
-    let habits = JSON.parse(localStorage.getItem('hp_habits')) || [
-      { id: '1', title: 'Beber 2L de Água', icon: 'droplet' },
-      { id: '2', title: 'Ler 20 Minutos', icon: 'book' },
-      { id: '3', title: 'Exercício Físico', icon: 'dumbbell' }
-    ];
+    const STORAGE_USERS_KEY = 'hp_registered_users_v1';
+    const STORAGE_SESSION_KEY = 'hp_user_session_v1';
 
-    let habitLogs = JSON.parse(localStorage.getItem('hp_logs')) || {};
-    let currentDate = new Date();
-    let selectedDateStr = formatDateKey(new Date());
-    let selectedIcon = 'book';
+    let registeredUsers = JSON.parse(localStorage.getItem(STORAGE_USERS_KEY)) || [];
 
-    const calendarGrid = document.getElementById('calendarGrid');
-    const calendarMonthYear = document.getElementById('calendarMonthYear');
-    const habitList = document.getElementById('habitList');
-    const emptyState = document.getElementById('emptyState');
-    const habitModal = document.getElementById('habitModal');
-    const habitForm = document.getElementById('habitForm');
-    const habitTitleInput = document.getElementById('habitTitleInput');
-    const selectedDateText = document.getElementById('selectedDateText');
-    const selectedDateProgressText = document.getElementById('selectedDateProgressText');
-    const completedRatioText = document.getElementById('completedRatioText');
-    const habitListSubtitle = document.getElementById('habitListSubtitle');
-    const streakCount = document.getElementById('streakCount');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const tabLoginBtn = document.getElementById('tabLoginBtn');
+    const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+    const feedbackMsg = document.getElementById('feedbackMsg');
 
-    function formatDateKey(date) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    }
+    function switchTab(tab) {
+      feedbackMsg.className = 'message-box';
+      feedbackMsg.style.display = 'none';
 
-    function formatReadableDate(dateKey) {
-      const [y, m, d] = dateKey.split('-').map(Number);
-      const date = new Date(y, m - 1, d);
-      if (dateKey === formatDateKey(new Date())) return 'Hoje';
-      return date.toLocaleDateString('pt-BR', { weekday: 'short', day: 'numeric', month: 'short' });
-    }
-
-    function init() {
-      renderCalendar();
-      renderHabits();
-      updateStreak();
-      setupEventListeners();
-      lucide.createIcons();
-    }
-
-    function renderCalendar() {
-      calendarGrid.innerHTML = '';
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth();
-
-      const monthName = currentDate.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
-      calendarMonthYear.textContent = monthName;
-
-      const firstDayIndex = new Date(year, month, 1).getDay();
-      const totalDays = new Date(year, month + 1, 0).getDate();
-      const todayKey = formatDateKey(new Date());
-
-      for (let i = 0; i < firstDayIndex; i++) {
-        const emptyCell = document.createElement('div');
-        emptyCell.style.height = '3.5rem';
-        calendarGrid.appendChild(emptyCell);
-      }
-
-      for (let day = 1; day <= totalDays; day++) {
-        const dateObj = new Date(year, month, day);
-        const dateKey = formatDateKey(dateObj);
-        
-        const completedIds = habitLogs[dateKey] || [];
-        const totalHabits = habits.length;
-        const progressPercent = totalHabits > 0 ? (completedIds.length / totalHabits) * 100 : 0;
-        const isFull = progressPercent === 100 && totalHabits > 0;
-        const isSelected = dateKey === selectedDateStr;
-        const isToday = dateKey === todayKey;
-
-        const radius = 17;
-        const circumference = 2 * Math.PI * radius;
-        const strokeDashoffset = circumference - (progressPercent / 100) * circumference;
-
-        const dayBtn = document.createElement('button');
-        dayBtn.className = `day-cell ${isSelected ? 'selected' : ''}`;
-        dayBtn.onclick = () => selectDate(dateKey);
-
-        let strokeColor = '#27272a';
-        if (progressPercent > 0 && !isFull) strokeColor = '#22c55e';
-        else if (isFull) strokeColor = '#4ade80';
-
-        const circleFill = isFull ? 'rgba(34, 197, 94, 0.22)' : 'transparent';
-        const glowFilter = isFull ? 'filter: drop-shadow(0px 0px 6px rgba(34, 197, 94, 0.8));' : '';
-
-        dayBtn.innerHTML = `
-          <svg style="width: 48px; height: 48px; position: absolute; inset: 0; margin: auto; pointer-events: none; ${glowFilter}" viewBox="0 0 44 44">
-            <circle cx="22" cy="22" r="${radius}" fill="${circleFill}" stroke="${isFull ? '#22c55e' : 'rgba(255,255,255,0.05)'}" stroke-width="2.5" />
-            ${progressPercent > 0 ? `
-              <circle class="calendar-ring-circle" cx="22" cy="22" r="${radius}" fill="none" stroke="${strokeColor}" stroke-width="2.5" stroke-dasharray="${circumference}" stroke-dashoffset="${strokeDashoffset}" stroke-linecap="round" />
-            ` : ''}
-          </svg>
-          <span style="position: relative; z-index: 10; font-size: 0.8125rem; font-weight: ${isFull || isToday ? '800' : '600'}; color: ${isFull ? '#4ade80' : isToday ? '#fff' : '#d4d4d8'}; text-decoration: ${isToday && !isFull ? 'underline' : 'none'};">
-            ${day}
-          </span>
-        `;
-        calendarGrid.appendChild(dayBtn);
-      }
-    }
-
-    function selectDate(dateKey) {
-      selectedDateStr = dateKey;
-      renderCalendar();
-      renderHabits();
-    }
-
-    function renderHabits() {
-      habitList.innerHTML = '';
-      selectedDateText.textContent = formatReadableDate(selectedDateStr);
-      habitListSubtitle.textContent = `Tarefas de ${formatReadableDate(selectedDateStr)}`;
-
-      if (habits.length === 0) {
-        emptyState.style.display = 'flex';
-        completedRatioText.textContent = '0/0';
-        selectedDateProgressText.textContent = '0%';
-        return;
+      if (tab === 'login') {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        tabLoginBtn.classList.add('active');
+        tabRegisterBtn.classList.remove('active');
       } else {
-        emptyState.style.display = 'none';
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        tabRegisterBtn.classList.add('active');
+        tabLoginBtn.classList.remove('active');
+      }
+    }
+
+    function showMessage(text, type) {
+      feedbackMsg.textContent = text;
+      feedbackMsg.className = `message-box ${type}`;
+    }
+
+    // Registo de Conta
+    registerForm.onsubmit = (e) => {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim().toLowerCase();
+      const password = document.getElementById('regPassword').value;
+
+      const userExists = registeredUsers.some(u => u.email === email);
+      if (userExists) {
+        showMessage('Este e-mail já está registado.', 'error');
+        return;
       }
 
-      const completedIds = habitLogs[selectedDateStr] || [];
-      const completedCount = completedIds.length;
-      const progressPercent = Math.round((completedCount / habits.length) * 100);
+      const newUser = { id: Date.now().toString(), name, email, password };
+      registeredUsers.push(newUser);
+      localStorage.setItem(STORAGE_USERS_KEY, JSON.stringify(registeredUsers));
 
-      completedRatioText.textContent = `${completedCount}/${habits.length}`;
-      selectedDateProgressText.textContent = `${progressPercent}%`;
-
-      habits.forEach(habit => {
-        const isDone = completedIds.includes(habit.id);
-        const card = document.createElement('div');
-        card.className = `habit-item ${isDone ? 'done' : ''}`;
-
-        card.innerHTML = `
-          <div style="display: flex; align-items: center; gap: 0.875rem; min-width: 0; flex: 1; margin-right: 0.5rem;">
-            <button onclick="toggleHabit('${habit.id}')" class="habit-checkbox ${isDone ? 'done' : ''}">
-              <i data-lucide="check" style="width: 14px; height: 14px; stroke-width: 3.5;"></i>
-            </button>
-            <div style="display: flex; align-items: center; gap: 0.5rem; min-width: 0; flex: 1;">
-              <i data-lucide="${habit.icon || 'check-circle-2'}" style="width: 16px; height: 16px; color: ${isDone ? '#52525b' : '#22c55e'}; flex-shrink: 0;"></i>
-              <span class="habit-title">
-                ${habit.title}
-              </span>
-            </div>
-          </div>
-          <button onclick="deleteHabit('${habit.id}')" class="btn-delete" title="Apagar hábito">
-            <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
-          </button>
-        `;
-        habitList.appendChild(card);
-      });
-      lucide.createIcons();
-    }
-
-    function toggleHabit(habitId) {
-      if (!habitLogs[selectedDateStr]) habitLogs[selectedDateStr] = [];
-      const index = habitLogs[selectedDateStr].indexOf(habitId);
-      if (index > -1) habitLogs[selectedDateStr].splice(index, 1);
-      else habitLogs[selectedDateStr].push(habitId);
-
-      saveData();
-      renderHabits();
-      renderCalendar();
-      updateStreak();
-    }
-
-    habitForm.onsubmit = (e) => {
-      e.preventDefault();
-      const title = habitTitleInput.value.trim();
-      if (!title) return;
-
-      habits.push({ id: Date.now().toString(), title, icon: selectedIcon });
-      saveData();
-      closeModal();
-      renderHabits();
-      renderCalendar();
-      habitTitleInput.value = '';
+      localStorage.setItem(STORAGE_SESSION_KEY, JSON.stringify({ id: newUser.id, name: newUser.name, email: newUser.email }));
+      
+      showMessage('Conta criada com sucesso! A entrar...', 'success');
+      setTimeout(() => {
+        window.location.href = 'habitos.html';
+      }, 1000);
     };
 
-    function deleteHabit(habitId) {
-      if (!confirm('Deseja apagar este hábito?')) return;
-      habits = habits.filter(h => h.id !== habitId);
-      Object.keys(habitLogs).forEach(date => {
-        habitLogs[date] = habitLogs[date].filter(id => id !== habitId);
-      });
-      saveData();
-      renderHabits();
-      renderCalendar();
-      updateStreak();
-    }
+    // Login na Conta
+    loginForm.onsubmit = (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+      const password = document.getElementById('loginPassword').value;
 
-    function updateStreak() {
-      let streak = 0;
-      let checkDate = new Date();
-      if (habits.length === 0) {
-        streakCount.textContent = '0';
+      const user = registeredUsers.find(u => u.email === email && u.password === password);
+
+      if (!user) {
+        showMessage('E-mail ou palavra-passe incorretos.', 'error');
         return;
       }
-      while (true) {
-        const key = formatDateKey(checkDate);
-        const completed = habitLogs[key] || [];
-        if (completed.length === habits.length && habits.length > 0) {
-          streak++;
-          checkDate.setDate(checkDate.getDate() - 1);
-        } else {
-          if (key === formatDateKey(new Date())) {
-            checkDate.setDate(checkDate.getDate() - 1);
-            continue;
-          }
-          break;
-        }
-      }
-      streakCount.textContent = streak;
-    }
 
-    function saveData() {
-      localStorage.setItem('hp_habits', JSON.stringify(habits));
-      localStorage.setItem('hp_logs', JSON.stringify(habitLogs));
-    }
+      localStorage.setItem(STORAGE_SESSION_KEY, JSON.stringify({ id: user.id, name: user.name, email: user.email }));
 
-    function openModal() { habitModal.classList.add('active'); }
-    function closeModal() { habitModal.classList.remove('active'); }
+      showMessage('Login efetuado! A entrar...', 'success');
+      setTimeout(() => {
+        window.location.href = 'habitos.html';
+      }, 800);
+    };
 
-    function setupEventListeners() {
-      document.getElementById('openModalBtn').onclick = openModal;
-      document.getElementById('closeModalBtn').onclick = closeModal;
-      document.getElementById('cancelModalBtn').onclick = closeModal;
-
-      document.getElementById('prevMonthBtn').onclick = () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); };
-      document.getElementById('nextMonthBtn').onclick = () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); };
-      document.getElementById('todayBtn').onclick = () => { currentDate = new Date(); selectedDateStr = formatDateKey(new Date()); renderCalendar(); renderHabits(); };
-
-      const iconButtons = document.querySelectorAll('.icon-pick-btn');
-      iconButtons.forEach(btn => {
-        btn.onclick = () => {
-          iconButtons.forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          selectedIcon = btn.getAttribute('data-icon');
-        };
-      });
-    }
-
-    init();
+    lucide.createIcons();
   </script>
 </body>
 </html>
